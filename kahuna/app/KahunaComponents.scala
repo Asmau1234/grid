@@ -36,7 +36,7 @@ object KahunaSecurityConfig {
 
     val frameSources = s"frame-src ${config.services.authBaseUri} ${config.services.kahunaBaseUri} https://accounts.google.com"
     val frameAncestors = s"frame-ancestors ${config.frameAncestors.mkString(" ")}"
-    val connectSources = s"connect-src ${(services :+ config.imageOrigin).mkString(" ")} 'self' www.google-analytics.com"
+    val connectSources = s"connect-src ${(services :+ config.imageOrigin).mkString(" ")} 'self' www.google-analytics.com *.appsync-api.eu-west-1.amazonaws.com wss://a2jbpw0jxcf4ty-ats.iot.eu-west-1.amazonaws.com" //TODO change AppSync to use custom domains OR pass explicit version of these in as config/params
 
     val imageSources: List[String] = List(
       "data:",
@@ -56,7 +56,7 @@ object KahunaSecurityConfig {
       // covered by frame-ancestors in contentSecurityPolicy
       frameOptions = None,
       // We use inline styles and script tags <sad face>
-      contentSecurityPolicy = Some(s"$frameSources; $frameAncestors; $connectSources; $fontSources; img-src ${imageSources.mkString(" ")}; default-src 'unsafe-inline' 'self'; script-src 'self' 'unsafe-inline' www.google-analytics.com;")
+      contentSecurityPolicy = Some(s"$frameSources; $frameAncestors; $connectSources; $fontSources; img-src ${imageSources.mkString(" ")}; default-src 'unsafe-inline' 'self'; script-src 'self' 'unsafe-inline' www.google-analytics.com https://pinboard.code.dev-gutools.co.uk;") //TODO reuse the pinboardBaseUrl from config
     )
   }
 }
